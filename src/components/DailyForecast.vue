@@ -186,4 +186,9 @@ export default {
     width: 100%;
     opacity: 80%;
   }
+
+  #dailyItem {
+    background: white;
+
+  }
 </style>

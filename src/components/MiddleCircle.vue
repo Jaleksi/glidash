@@ -6,9 +6,7 @@
       : "8"
     }}°
   </div>
-  <div id="datetimeText">
-  Lauantai 10.12. 12:40
-  </div>
+  <div id="datetimeText"></div>
 </template>
 
 
@@ -21,6 +19,8 @@ export default {
     return {
       canvas: null,
       ctx: null,
+      weekDays: ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"],
+      dateTimeInterval: null,
     }
   },
   mounted() {
@@ -31,6 +31,15 @@ export default {
     this.canvas.height = this.canvas.clientHeight;
     this.ctx = ctx;
     this.draw();
+    this.updateDateTime();
+    this.dateTimeInterval = setInterval(this.updateDateTime, 60000);
+  },
+
+  beforeUnmount() {
+    if (this.dateTimeInterval) {
+      clearInterval(this.dateTimeInterval);
+      this.dateTimeInterval = null;
+    }
   },
 
   methods: {
@@ -51,6 +60,15 @@ export default {
 
       drawHourlyGraph(this.ctx, cx, cy, r, hourlyTemps);
       drawSunGraph(this.ctx, cx, cy, r, dt, sunrise, sunset);
+    },
+
+    updateDateTime() {
+      const datetextDiv = document.getElementById("datetimeText");
+      const now = new Date();
+      const day = this.weekDays[now.getDay()];
+      const date = `${now.getDate()}.${now.getMonth() + 1}.`;
+      const time = `${now.getHours()}:${now.getMinutes()}`;
+      datetextDiv.innerHTML = `${day} ${date} ${time}`;
     },
   },
 
@@ -89,7 +107,7 @@ export default {
   #datetimeText {
     position: absolute;
     z-index: 1;
-    top: 50%;
+    top: 87%;
     left: 50%;
     transform: translate(-50%, 150%);
   }

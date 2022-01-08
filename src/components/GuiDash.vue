@@ -1,6 +1,11 @@
 <template>
   <div id="mainContainer">
-    <div id="leftContainer">a</div>
+    <div id="leftContainer">
+      <Karpat v-if="karpatDataFetched"/>
+      <h1 v-else>LOADING KARPAT DATA...</h1>
+      <Korona v-if="koronaDataFetched"/>
+      <h1 v-else>LOADING KORONA DATA...</h1>
+    </div>
     <div id="middleContainer">
       <MiddleCircle v-if="weatherDataFetched"/>
       <h1 v-else>LOADING WEATHERDATA...</h1>
@@ -19,6 +24,8 @@
 import MiddleCircle from './MiddleCircle.vue'
 import DailyForecast from './DailyForecast.vue'
 import HourlyForecast from './HourlyForecast.vue'
+import Karpat from './Karpat.vue'
+import Korona from './Korona.vue'
 
 export default {
   name: 'GuiDash',
@@ -26,10 +33,14 @@ export default {
     MiddleCircle,
     DailyForecast,
     HourlyForecast,
+    Karpat,
+    Korona,
   },
   data() {
     return {
       weatherDataFetched: false,
+      karpatDataFetched: false,
+      koronaDataFetched: false,
       dataFetchInterval: null,
     };
   },
@@ -44,7 +55,22 @@ export default {
       this.weatherDataFetched = false;
     });
     */
-    setTimeout(() => {this.weatherDataFetched = true}, 1000);
+    this.$store.dispatch('updateKoronaData').then((res) => {
+      this.koronaDataFetched = true;
+    }, err => {
+      this.koronaDataFetched = false;
+    });    
+
+    this.$store.dispatch('updateKarpatData').then((res) => {
+      this.karpatDataFetched = true;
+    }, err => {
+      this.karpatDataFetched = false;
+    });
+
+
+    setTimeout(() => {
+      this.weatherDataFetched = true;
+    }, 1000);
   },
   beforeUnmount() {
     if (this.dataFetchInterval) {
@@ -67,6 +93,8 @@ export default {
   #leftContainer {
     grid-column-start: 1;
     grid-row-start: 1;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
   }
 
   #middleContainer {
@@ -86,5 +114,9 @@ export default {
     grid-template-rows: 1fr 1fr;
     margin: 0.5em;
     grid-gap: 4px;
+  }
+
+  #koronaContainer {
+    margin: 0.5em;
   }
 </style>
