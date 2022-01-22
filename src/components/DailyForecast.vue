@@ -30,66 +30,7 @@ export default {
   methods: {
     draw() {
       const daysCount = 7;
-      //const days = this.weatherData.daily.slice(0, daysCount);
-      const days = [
-        {
-          dt: 1640080800,
-          temp: {
-            min: -25,
-            max: 25,
-          },
-          pop: 0.2,
-        },
-        {
-          dt: 1640080800,
-          temp: {
-            min: -5,
-            max: 15,
-          },
-          pop: 0.2,
-        },
-        {
-          dt: 1640080800,
-          temp: {
-            min: -5,
-            max: 5,
-          },
-          pop: 0.2,
-        },
-        {
-          dt: 1640080800,
-          temp: {
-            min: -8,
-            max: 12,
-          },
-          pop: 0.2,
-        },
-        {
-          dt: 1640080800,
-          temp: {
-            min: -15,
-            max: 15,
-          },
-          pop: 0.2,
-        },
-        {
-          dt: 1640080800,
-          temp: {
-            min: -15,
-            max: 15,
-          },
-          pop: 0.2,
-        },
-        {
-          dt: 1640080800,
-          temp: {
-            min: -15,
-            max: 15,
-          },
-          pop: 0.2,
-        },
-      ];
-
+      const days = this.weatherData.daily.slice(0, daysCount);
       const dayNames = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
       const dailyGrid = document.getElementById("dailyContainer");
 

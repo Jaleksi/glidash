@@ -45,38 +45,37 @@ export default {
     };
   },
   mounted() {
-    /*
     this.dataFetchInterval =
-      setInterval(this.$store.dispatch('updateWeatherData'), 300000);
-
-    this.$store.dispatch('updateWeatherData').then((res) => {
-      this.weatherDataFetched = true;
-    }, err => {
-      this.weatherDataFetched = false;
-    });
-    */
-    this.$store.dispatch('updateKoronaData').then((res) => {
-      this.koronaDataFetched = true;
-    }, err => {
-      this.koronaDataFetched = false;
-    });    
-
-    this.$store.dispatch('updateKarpatData').then((res) => {
-      this.karpatDataFetched = true;
-    }, err => {
-      this.karpatDataFetched = false;
-    });
-
-
-    setTimeout(() => {
-      this.weatherDataFetched = true;
-    }, 1000);
+      setInterval(this.updateDatas, 300000);
+    this.updateDatas();
   },
   beforeUnmount() {
     if (this.dataFetchInterval) {
       clearInterval(this.dataFetchInterval);
       this.dataFetchInterval = null;
     }
+    this.updateDatas();
+  },
+  methods: {
+    updateDatas() {
+      this.$store.dispatch('updateWeatherData').then((res) => {
+        this.weatherDataFetched = true;
+      }, err => {
+        console.log(err);
+      });
+
+      this.$store.dispatch('updateKoronaData').then((res) => {
+        this.koronaDataFetched = true;
+      }, err => {
+        console.log(err);
+      });    
+
+      this.$store.dispatch('updateKarpatData').then((res) => {
+        this.karpatDataFetched = true;
+      }, err => {
+        console.log(err);
+      });
+    },
   },
 }
 </script>

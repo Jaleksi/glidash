@@ -49,8 +49,8 @@ export default {
 
     draw() {
       this.clear();
-      //const hourlyTemps = this.$store.state.weatherData.hourly.map(h => h.temp); 
-      const hourlyTemps = [3,2,2,3,3,4,4,4,4,5,5,3,3,3,2,2,2,2,1,1,3,4,4,5,5,6];
+      const hourlyTemps = this.$store.state.weatherData.hourly.map(h => h.temp); 
+      //const hourlyTemps = [3,2,2,3,3,4,4,4,4,5,5,3,3,3,2,2,2,2,1,1,3,4,4,5,5,6];
       const cx = this.canvas.width / 2;
       const cy = this.canvas.height / 2;
       const r = cx * 0.98; // 0.9
@@ -107,8 +107,9 @@ export default {
   #datetimeText {
     position: absolute;
     z-index: 1;
-    top: 87%;
+    top: 84%;
     left: 50%;
+    font-size: 1.5em;
     transform: translate(-50%, 150%);
   }
 </style>

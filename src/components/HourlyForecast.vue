@@ -21,80 +21,7 @@ export default {
   methods: {
     draw() {
       const hourCount = 10;
-      //const hours = this.weatherData.hourly.slice(0, hourCount);
-      const hours = [
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-        {
-          dt: 1640098800,
-          weather: [{icon: "02n"}],
-          temp: -15.32,
-          pop: 0.4,
-          wind_speed: 2.43,
-        },
-      ];
-
+      const hours = this.weatherData.hourly.slice(0, hourCount);
       const hourlyGrid = document.getElementById("hourlyContainer");
 
       for (let i = 0; i < hourCount; ++i) {
@@ -108,8 +35,10 @@ export default {
         const iconDiv = document.createElement("img");
         iconDiv.src = `http://openweathermap.org/img/wn/${hours[i].weather[0].icon}@2x.png`;
         iconDiv.style.gridArea = (i + 2) + " / 2";
-        iconDiv.style.width = "100%";
-        iconDiv.style.height = "100%";
+        iconDiv.style.textAlign = "center";
+        iconDiv.style.display = "block"
+        iconDiv.style.margin = "0 auto";
+        iconDiv.style.maxWidth = "100%";
         hourlyGrid.appendChild(iconDiv);
 
         // temp cell
