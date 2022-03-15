@@ -21,7 +21,24 @@ export default {
     this.draw();
   },
   methods: {
+    clear() {
+      const idsToSpare = [
+        "koronaHeader",
+        "kokoSuomiTartunnat",
+        "kokoSuomiIlmaantuvuus",
+        "ouluTartunnat",
+        "ouluIlmaantuvuus",
+      ];
+      const coronaGrid = document.getElementById("koronaContainer");
+      [...coronaGrid.childNodes].forEach((child) => {
+        if (!idsToSpare.includes(child.id)) {
+          coronaGrid.removeChild(child);
+        }
+      });
+    },
+
     draw() {
+      this.clear();
       const dataEntries = [
         this.koronaData.suomi.tapaukset,
         this.koronaData.suomi.ilmaantuvuus,

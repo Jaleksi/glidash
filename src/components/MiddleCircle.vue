@@ -1,7 +1,7 @@
 <template>
   <canvas id="middleCanvas"/>
   <div id="currentTempText">
-    {{this.$store.state.weatherDataX
+    {{this.$store.state.weatherData
       ? Math.round(this.$store.state.weatherData.current.temp)
       : "8"
     }}°
@@ -19,7 +19,7 @@ export default {
     return {
       canvas: null,
       ctx: null,
-      weekDays: ["Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai", "Sunnuntai"],
+      weekDays: ["Sunnuntai", "Maanantai", "Tiistai", "Keskiviikko", "Torstai", "Perjantai", "Lauantai"],
       dateTimeInterval: null,
     }
   },
@@ -50,13 +50,12 @@ export default {
     draw() {
       this.clear();
       const hourlyTemps = this.$store.state.weatherData.hourly.map(h => h.temp); 
-      //const hourlyTemps = [3,2,2,3,3,4,4,4,4,5,5,3,3,3,2,2,2,2,1,1,3,4,4,5,5,6];
       const cx = this.canvas.width / 2;
       const cy = this.canvas.height / 2;
       const r = cx * 0.98; // 0.9
-      const sunrise = 1639728000;
-      const sunset = 1639742400;
-      const dt = 1639731600;
+      const sunrise = this.$store.state.weatherData.current.sunrise;
+      const sunset = this.$store.state.weatherData.current.sunset;
+      const dt = this.$store.state.weatherData.current.dt;
 
       drawHourlyGraph(this.ctx, cx, cy, r, hourlyTemps);
       drawSunGraph(this.ctx, cx, cy, r, dt, sunrise, sunset);

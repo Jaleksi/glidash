@@ -32,7 +32,7 @@ const drawHourlyGraph = (ctx, centerX, centerY, r, hourlyTemps) => {
 
   // extra points to make sure there are no gaps in circle
   ctx.lineTo(centerX + r, centerY + r);
-  ctx.lineTo(centerX, centerY + r + 50);
+  ctx.lineTo(0, centerY + r);
   ctx.closePath();
 
   const grd = ctx.createLinearGradient(0, centerY + r, 0, centerY);

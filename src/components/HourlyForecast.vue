@@ -13,6 +13,7 @@ export default {
   name: 'HourlyForecast',
   data() {
     return {
+      hourCount: 10,
     }
   },
   mounted() {
@@ -20,11 +21,11 @@ export default {
   },
   methods: {
     draw() {
-      const hourCount = 10;
-      const hours = this.weatherData.hourly.slice(0, hourCount);
+      this.clear();
+      const hours = this.weatherData.hourly.slice(0, this.hourCount);
       const hourlyGrid = document.getElementById("hourlyContainer");
 
-      for (let i = 0; i < hourCount; ++i) {
+      for (let i = 0; i < this.hourCount; ++i) {
         // hour cell
         const hourDiv = document.createElement("div");
         hourDiv.innerHTML = new Date(hours[i].dt * 1000).getHours();
@@ -58,8 +59,18 @@ export default {
         windDiv.innerHTML = Math.round(hours[i].wind_speed);
         windDiv.style.gridArea = (i + 2) + " / 5";
         hourlyGrid.appendChild(windDiv);
-
       }
+    },
+
+    clear() {
+      const hourlyGrid = document.getElementById("hourlyContainer");
+      const divIdsToSpare = ["celsiusSymbol", "dropletSymbol", "windSymbol"];
+    
+      [...hourlyGrid.childNodes].forEach((child) => {
+        if (!divIdsToSpare.includes(child.id)) {
+          hourlyGrid.removeChild(child);
+        }
+      });
     },
   },
   computed: {

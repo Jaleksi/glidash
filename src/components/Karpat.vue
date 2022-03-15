@@ -32,8 +32,17 @@ export default {
   mounted() {
     this.draw();
   },
+
   methods: {
+    clear() {
+      const karpatGrid = document.getElementById("karpatContainer");
+      [...karpatGrid.childNodes].forEach((child) => {
+        karpatGrid.removeChild(child);
+      });
+    },
+
     draw() {
+      this.clear();
       const karpatGrid = document.getElementById("karpatContainer");
       const yellowGrd = "linear-gradient(to right, rgba(128, 128, 0, 1), rgba(255, 255, 0, 0.1)";
       const blackGrd = "linear-gradient(to right, rgba(50, 50, 50, 1), rgba(0, 0, 0, 0.1)";

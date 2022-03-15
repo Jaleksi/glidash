@@ -18,6 +18,8 @@ export default {
     return {
       canvas: null,
       ctx: null,
+      daysCount: 7,
+      dayNames: ["Su", "Ma", "Ti", "Ke", "To", "Pe", "La"],
     }
   },
   mounted() {
@@ -28,17 +30,32 @@ export default {
     this.draw();
   },
   methods: {
+    clear() {
+      const dailyGrid = document.getElementById("dailyContainer");
+      const idsToSpare = [
+        "celsiusSymbol",
+        "lowestSymbol",
+        "highestSymbol",
+        "dropletSymbol",
+        "temperatureCanvas",
+      ];
+      [...dailyGrid.childNodes].forEach((child) => {
+        if (!idsToSpare.includes(child.id)) {
+          dailyGrid.removeChild(child);
+        }
+      });
+    },
+
     draw() {
-      const daysCount = 7;
-      const days = this.weatherData.daily.slice(0, daysCount);
-      const dayNames = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"];
+      this.clear();
+      const days = this.weatherData.daily.slice(0, this.daysCount);
       const dailyGrid = document.getElementById("dailyContainer");
 
-      for (let i = 0; i < daysCount; ++i) {
+      for (let i = 0; i < this.daysCount; ++i) {
         // Insert day cell
         const dayDiv = document.createElement("div");
         const dayNum = new Date(days[i].dt * 1000).getDay();
-        dayDiv.innerHTML = dayNames[dayNum];
+        dayDiv.innerHTML = this.dayNames[dayNum];
         dayDiv.style.gridArea = (i + 2) + " / 1";
         dailyGrid.appendChild(dayDiv);
 
