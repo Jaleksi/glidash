@@ -10,7 +10,7 @@
 
 
 <script>
-import { drawTemperatureGraph } from '../canvas'
+import { drawTemperatureGraph } from '../canvas_utils'
 
 export default {
   name: 'DailyForecast',
@@ -71,7 +71,7 @@ export default {
 
         // Insert rain probability cell
         const rainDiv = document.createElement("div");
-        rainDiv.innerHTML = days[i].pop * 100;
+        rainDiv.innerHTML = Math.round(days[i].pop * 100);
         rainDiv.style.gridArea = (i + 2) + " / 5";
         rainDiv.textAlign = "right";
         dailyGrid.appendChild(rainDiv);
@@ -105,14 +105,7 @@ export default {
     grid-template-rows: repeat(8, 1fr);
     grid-template-columns: repeat(5, 1fr);
     align-items: center;
-    background: linear-gradient(#b4dbff, #58aeff);
-    border-radius: 10px;
-  }
-
-  #hourlyContainer {
-    grid-column-start: 1;
-    grid-row-start: 2;
-    background: linear-gradient(#b4dbff, #58aeff);
+    background: linear-gradient(#FFF4E0, #F6E1C3);
     border-radius: 10px;
   }
 

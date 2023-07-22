@@ -11,7 +11,11 @@
 
 
 <script>
-import { drawHourlyGraph, drawSunGraph } from '../canvas'
+import { drawHourlyGraph, drawSunGraph } from '../canvas_utils'
+const OPTIONS = {
+  drawTemperatureGraph: true,
+  drawSunGraph: true,
+};
 
 export default {
   name: 'MiddleCircle',
@@ -52,13 +56,17 @@ export default {
       const hourlyTemps = this.$store.state.weatherData.hourly.map(h => h.temp); 
       const cx = this.canvas.width / 2;
       const cy = this.canvas.height / 2;
-      const r = cx * 0.98; // 0.9
+      const r = cx * 0.9;
       const sunrise = this.$store.state.weatherData.current.sunrise;
       const sunset = this.$store.state.weatherData.current.sunset;
       const dt = this.$store.state.weatherData.current.dt;
 
-      drawHourlyGraph(this.ctx, cx, cy, r, hourlyTemps);
-      drawSunGraph(this.ctx, cx, cy, r, dt, sunrise, sunset);
+      if (OPTIONS.drawTemperatureGraph) {
+        drawHourlyGraph(this.ctx, cx, cy, r, hourlyTemps);
+      }
+      if (OPTIONS.drawSunGraph) {
+        drawSunGraph(this.ctx, cx, cy, r, dt, sunrise, sunset);
+      }
     },
 
     updateDateTime() {
@@ -66,7 +74,9 @@ export default {
       const now = new Date();
       const day = this.weekDays[now.getDay()];
       const date = `${now.getDate()}.${now.getMonth() + 1}.`;
-      const time = `${now.getHours()}:${now.getMinutes()}`;
+      const hours = now.getHours().toString().padStart(2, "0");
+      const minutes = now.getMinutes().toString().padStart(2, "0");
+      const time = `${hours}:${minutes}`;
       datetextDiv.innerHTML = `${day} ${date} ${time}`;
     },
   },
@@ -101,6 +111,7 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: #FFF4E0;
   }
 
   #datetimeText {
@@ -110,5 +121,6 @@ export default {
     left: 50%;
     font-size: 1.5em;
     transform: translate(-50%, 150%);
+    color: #FFF4E0;
   }
 </style>

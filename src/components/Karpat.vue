@@ -53,17 +53,17 @@ export default {
         rowContainer.style.background = i % 2 === 0 ? yellowGrd : blackGrd;
 
         const homeIcon = document.createElement("img");
+        const homeIconDiv = document.createElement("div");
         const dividerDiv = document.createElement("div");
+        const awayIconDiv = document.createElement("div");
         const awayIcon = document.createElement("img");
         const dateDiv = document.createElement("div");
         const resultDiv = document.createElement("div");
 
         homeIcon.src = this.teamIcons[game.homeTeam.teamId.split(":")[1]];
-        homeIcon.style.width = "auto";
-        homeIcon.style.height = "80%";
+        homeIconDiv.className = "teamIconWrapper";
         awayIcon.src = this.teamIcons[game.awayTeam.teamId.split(":")[1]];
-        awayIcon.style.width = "auto";
-        awayIcon.style.height = "80%";
+        awayIconDiv.className = "teamIconWrapper";
         const startDate = new Date(game.start);
         dividerDiv.innerHTML = "-";
         dateDiv.innerHTML = `${startDate.getDate()}.${startDate.getMonth() + 1}.`;
@@ -74,14 +74,17 @@ export default {
         dividerDiv.style.gridArea = "1 / 2";
         dateDiv.style.gridArea = "1 / 4";
         resultDiv.style.gridArea = "1 / 5";
-        homeIcon.style.gridArea = "1 / 1";
-        awayIcon.style.gridArea = "1 / 3";
-        
+        homeIconDiv.style.gridArea = "1 / 1";
+        awayIconDiv.style.gridArea = "1 / 3";
+
+        homeIconDiv.appendChild(homeIcon);
+        awayIconDiv.appendChild(awayIcon);
+
         rowContainer.appendChild(dividerDiv);
         rowContainer.appendChild(dateDiv);
         rowContainer.appendChild(resultDiv);
-        rowContainer.appendChild(homeIcon);
-        rowContainer.appendChild(awayIcon);
+        rowContainer.appendChild(homeIconDiv);
+        rowContainer.appendChild(awayIconDiv);
 
         rowContainer.style.gridArea = (i + 1) + " / 1";
         karpatGrid.appendChild(rowContainer);
@@ -115,11 +118,19 @@ export default {
   }
 
   .rowContainer {
+    color: #FFEAD2;
     display: grid;
     grid-template-rows: 1fr;
     grid-template-columns: 0.5fr 0.5fr 0.5fr 1fr 0.8fr;
     margin: 0;
     height: 100%;
     align-items: center;
+  }
+
+  .teamIconWrapper {
+    width: auto;
+    height: 80%;
+    display: flex;
+    justify-content: center;
   }
 </style>

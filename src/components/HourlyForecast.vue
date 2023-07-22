@@ -1,8 +1,8 @@
 <template>
   <div id="hourlyContainer">
     <div id="celsiusSymbol">C°</div>
-    <div id="dropletSymbol">💧%</div>
     <div id="windSymbol">m/s</div>
+    <div id="dropletSymbol">💧%</div>
   </div>
 </template>
 
@@ -28,19 +28,17 @@ export default {
       for (let i = 0; i < this.hourCount; ++i) {
         // hour cell
         const hourDiv = document.createElement("div");
-        hourDiv.innerHTML = new Date(hours[i].dt * 1000).getHours();
+        const hoursString = new Date(hours[i].dt * 1000).getHours().toString();
+        hourDiv.innerHTML = hoursString.padStart(2, "0");
         hourDiv.style.gridArea = (i + 2) + " / 1";
         hourlyGrid.appendChild(hourDiv);
 
         // icon cell
-        const iconDiv = document.createElement("img");
-        iconDiv.src = `http://openweathermap.org/img/wn/${hours[i].weather[0].icon}@2x.png`;
-        iconDiv.style.gridArea = (i + 2) + " / 2";
-        iconDiv.style.textAlign = "center";
-        iconDiv.style.display = "block"
-        iconDiv.style.margin = "0 auto";
-        iconDiv.style.maxWidth = "100%";
-        hourlyGrid.appendChild(iconDiv);
+        const icon = document.createElement("img");
+        icon.className = "iconWrapper";
+        icon.src = `https://openweathermap.org/img/wn/${hours[i].weather[0].icon}@2x.png`;
+        icon.style.gridArea = (i + 2) + " / 2";
+        hourlyGrid.appendChild(icon);
 
         // temp cell
         const tempDiv = document.createElement("div");
@@ -48,17 +46,17 @@ export default {
         tempDiv.style.gridArea = (i + 2) + " / 3";
         hourlyGrid.appendChild(tempDiv);
 
-        // rain cell
-        const rainDiv = document.createElement("div");
-        rainDiv.innerHTML = hours[i].pop * 100;
-        rainDiv.style.gridArea = (i + 2) + " / 4";
-        hourlyGrid.appendChild(rainDiv);
-
         // wind cell
         const windDiv = document.createElement("div");
         windDiv.innerHTML = Math.round(hours[i].wind_speed);
-        windDiv.style.gridArea = (i + 2) + " / 5";
+        windDiv.style.gridArea = (i + 2) + " / 4";
         hourlyGrid.appendChild(windDiv);
+
+        // rain cell
+        const rainDiv = document.createElement("div");
+        rainDiv.innerHTML = Math.round(hours[i].pop * 100);
+        rainDiv.style.gridArea = (i + 2) + " / 5";
+        hourlyGrid.appendChild(rainDiv);
       }
     },
 
@@ -89,11 +87,11 @@ export default {
 
 
 
-<style scoped>
+<style>
   #hourlyContainer {
     grid-column-start: 1;
     grid-row-start: 2;
-    background: linear-gradient(#b4dbff, #58aeff);
+    background: linear-gradient(#FFF4E0, #F6E1C3);
     border-radius: 10px;
     display: grid;
     grid-template-rows: repeat(11, 1fr);
@@ -105,14 +103,21 @@ export default {
     grid-column-start: 3;
     grid-row-start: 1;
   }
-  
-  #dropletSymbol {
+
+  #windSymbol {
     grid-column-start: 4;
     grid-row-start: 1;
   }
   
-  #windSymbol {
+  #dropletSymbol {
     grid-column-start: 5;
     grid-row-start: 1;
+  }
+
+  .iconWrapper {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
   }
 </style>

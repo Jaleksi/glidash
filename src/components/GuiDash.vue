@@ -3,8 +3,8 @@
     <div id="leftContainer">
       <Karpat v-if="karpatDataFetched"/>
       <h1 v-else>LOADING KARPAT DATA...</h1>
-      <Korona v-if="koronaDataFetched"/>
-      <h1 v-else>LOADING KORONA DATA...</h1>
+      <Busses v-if="bussesDataFetched"/>
+      <h1 v-else>LOADING BUSSES DATA...</h1>
     </div>
     <div id="middleContainer">
       <MiddleCircle v-if="weatherDataFetched"/>
@@ -25,7 +25,7 @@ import MiddleCircle from './MiddleCircle.vue'
 import DailyForecast from './DailyForecast.vue'
 import HourlyForecast from './HourlyForecast.vue'
 import Karpat from './Karpat.vue'
-import Korona from './Korona.vue'
+import Busses from './Busses.vue'
 
 export default {
   name: 'GuiDash',
@@ -34,46 +34,59 @@ export default {
     DailyForecast,
     HourlyForecast,
     Karpat,
-    Korona,
+    Busses,
   },
   data() {
     return {
       weatherDataFetched: false,
       karpatDataFetched: false,
-      koronaDataFetched: false,
-      dataFetchInterval: null,
+      bussesDataFetched: false,
+      dataFetchInterval1min: null,
+      dataFetchInterval5min: null,
+      staticDataFetchInterval: null,
     };
   },
   mounted() {
-    this.dataFetchInterval =
+    this.dataFetchInterval5min =
       setInterval(this.updateDatas, 300000);
-    this.updateDatas();
+    this.dataFetchInterval1min =
+      setInterval(this.updateDatas, 60000);
+
+    this.updateDatas5min();
+    this.updateDatas1min();
   },
   beforeUnmount() {
-    if (this.dataFetchInterval) {
-      clearInterval(this.dataFetchInterval);
-      this.dataFetchInterval = null;
+    if (this.dataFetchInterval1min) {
+      clearInterval(this.dataFetchInterval1min);
+      this.dataFetchInterval1min = null;
     }
-    this.updateDatas();
+    if (this.dataFetchInterval5min) {
+      clearInterval(this.dataFetchInterval5min);
+      this.dataFetchInterval5min = null;
+    }
   },
   methods: {
-    updateDatas() {
+    updateDatas5min() {
       this.$store.dispatch('updateWeatherData').then((res) => {
         this.weatherDataFetched = true;
       }, err => {
+        this.weatherDataFetched = false;
         console.log(err);
       });
-
-      this.$store.dispatch('updateKoronaData').then((res) => {
-        this.koronaDataFetched = true;
-      }, err => {
-        console.log(err);
-      });    
 
       this.$store.dispatch('updateKarpatData').then((res) => {
         this.karpatDataFetched = true;
       }, err => {
+        this.karpatDataFetched = false;
         console.log(err);
+      });
+    },
+    updateDatas1min() {
+      this.$store.dispatch('updateBussesLiveData').then((res) => {
+        this.bussesDataFetched = true;
+      }, err => {
+        this.bussesDataFetched = false;
+        console.error(err);
       });
     },
   },
