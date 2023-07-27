@@ -135,7 +135,7 @@ export default {
     grid-row-end: 9;
     height: 100%;
     width: 100%;
-    opacity: 80%;
+    opacity: 0.8;
   }
 
   #dailyItem {
