@@ -202,9 +202,8 @@ export const store = createStore({
     updateBussesStaticData({
       commit
     }) {
-      //const apiUrl = "/api/229.zip";
       const apiUrl = "https://tvv.fra1.digitaloceanspaces.com/229.zip";
-      return axios.get(apiUrl, {
+      return axios.get(process.env.VUE_APP_CORS_PROXY_PREFIX + apiUrl, {
         responseType: "blob",
       }).then(res => {
         const zipper = new JSZip();
